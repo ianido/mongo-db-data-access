@@ -18,7 +18,7 @@ namespace MongoDB.Repository
         #region Protected Properties
 
         protected IMongoDbContext Context { get; }
-        protected IMongoCollection<T> Collection { get; }
+        public IMongoCollection<T> Collection { get; }
 
         #endregion Protected Properties
 
