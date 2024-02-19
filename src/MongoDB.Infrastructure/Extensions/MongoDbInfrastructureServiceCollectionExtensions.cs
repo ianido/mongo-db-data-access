@@ -38,7 +38,7 @@ namespace MongoDB.Infrastructure.Extensions
             }
 
             clientSettings.ConfigureCluster(keepAliveSettings);
-
+            /*
             if (factory != null)
             {
                 var client = new MongoClient(clientSettings);
@@ -46,7 +46,8 @@ namespace MongoDB.Infrastructure.Extensions
                 var options = new MongoDbContextOptions(clientSettings);
 
                 services.TryAdd(new ServiceDescriptor(typeof(TService), sp => factory(sp, client, database, options), serviceLifetime));
-            }
+            }*/
+
             services.TryAddSingleton<IMongoDbConnectionManager>(MongoDbConnectionManager.Instance);
             services.TryAddSingleton<IMongoDbClientManager>(MongoDbClientManager.Instance);
             services.TryAddSingleton<IMongoDbDatabaseManager>(MongoDbDatabaseManager.Instance);

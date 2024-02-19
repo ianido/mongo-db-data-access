@@ -43,19 +43,16 @@ namespace MongoDB.Tests.Fixtures
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddMongoDbContext<IMongoDbContext, BloggingContext>(
+            services.AddMongoDbContext<IMongoDbContext<BloggingContext>, BloggingContext>(
                 connectionString: Configuration.GetValue<string>("MongoSettings:Blogging:ConnectionString"),
                 databaseName: Configuration.GetValue<string>("MongoSettings:Blogging:DatabaseName"),
                 setupFluentConfigurationOptions: options => options.ScanningAssemblies = new[] { typeof(BloggingContext).Assembly });
 
-            for (int idx = 1; idx <= 2; idx++)
-            {
-                services.AddMongoDbContext<IMongoDbContext, TestingContext>(
-                    connectionString: Configuration.GetValue<string>("MongoSettings:Testing:ConnectionString"),
-                    databaseName: Configuration.GetValue<string>("MongoSettings:Testing:DatabaseName"),
-                    setupDbContextOptions: options => options.DbContextId = $"{nameof(TestingContext)} - {idx}",
-                    setupFluentConfigurationOptions: options => options.ScanningAssemblies = new[] { typeof(TestingContext).Assembly });
-            }
+            services.AddMongoDbContext<IMongoDbContext<TestingContext>, TestingContext>(
+                connectionString: Configuration.GetValue<string>("MongoSettings:Testing:ConnectionString"),
+                databaseName: Configuration.GetValue<string>("MongoSettings:Testing:DatabaseName"),
+                setupFluentConfigurationOptions: options => options.ScanningAssemblies = new[] { typeof(TestingContext).Assembly });
+
 
             services.AddMongoDbUnitOfWork();
             services.AddMongoDbUnitOfWork<BloggingContext>();

@@ -21,6 +21,7 @@ namespace MongoDB.Tests.Implementation
     {
         private readonly IMongoDbUnitOfWork _unitOfWork;
         private readonly IMongoDbUnitOfWork<BloggingContext> _unitOfWorkOfT;
+        private readonly IMongoDbUnitOfWork<TestingContext> _unitOfWorkOfTB;
         private readonly IMongoDbUnitOfWorkFactory<TestingContext> _unitOfWorkFactoryOfT;
 
         private readonly IMongoDbRepositoryFactory _repositoryFactory;
@@ -33,6 +34,9 @@ namespace MongoDB.Tests.Implementation
             _unitOfWork = ServiceProvider.GetRequiredService<IMongoDbUnitOfWork>();
             // IMongoDbUnitOfWork<T> used for used for multiple databases scenario;
             _unitOfWorkOfT = ServiceProvider.GetRequiredService<IMongoDbUnitOfWork<BloggingContext>>();
+            // IMongoDbUnitOfWork<T> used for used for multiple databases scenario;
+            _unitOfWorkOfTB = ServiceProvider.GetRequiredService<IMongoDbUnitOfWork<TestingContext>>();
+
             // IMongoDbUnitOfWorkFactory<T> used for used for multi-tenant scenario;
             _unitOfWorkFactoryOfT = ServiceProvider.GetRequiredService<IMongoDbUnitOfWorkFactory<TestingContext>>();
 
@@ -41,6 +45,16 @@ namespace MongoDB.Tests.Implementation
             // IMongoDbRepositoryFactory<T> used for readonly/multiple databases scenario;
             _repositoryFactoryOfT = ServiceProvider.GetRequiredService<IMongoDbRepositoryFactory<BloggingContext>>();
         }
+
+        [Fact]
+        public void Check()
+        {
+            var unitOfWork1 = _unitOfWorkOfT;
+            var unitOfWork2 = _unitOfWorkOfTB;
+
+            Assert.True(true);
+        }
+
 
         [Theory]
         [InlineData($"{nameof(TestingContext)} - 1")]
