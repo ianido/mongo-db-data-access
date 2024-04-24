@@ -46,7 +46,7 @@ namespace MongoDB.Infrastructure.Internal
             database = _databases.Where(database => database is not null)
                                  .Where(database => database.Client.Settings.ToString() == client.Settings.ToString())
                                  .Where(database => database.DatabaseNamespace.DatabaseName.Equals(databaseName, StringComparison.OrdinalIgnoreCase))
-                                 .SingleOrDefault();
+                                 .FirstOrDefault();
 
             return database is not null;
         }
