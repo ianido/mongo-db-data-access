@@ -46,10 +46,9 @@ namespace MongoDB.Infrastructure.Internal
         {
             semaphore = _semaphores.ToArray()
                                    .Where(semaphore => semaphore.Key is not null && semaphore.Value is not null)
-                                   .Where(semaphore => semaphore.Key.Settings.Servers.Count() == client.Settings.Servers.Count())
-                                   .Where(semaphore => semaphore.Key.Settings.Servers.All(client.Settings.Servers.Contains))
+                                   .Where(semaphore => semaphore.Key.Settings.ToString().Equals(client.Settings.ToString(), StringComparison.OrdinalIgnoreCase))
                                    .Select(semaphore => semaphore.Value)
-                                   .SingleOrDefault();
+                                   .FirstOrDefault();
 
             return semaphore is not null;
         }
