@@ -40,7 +40,7 @@ namespace MongoDB.Infrastructure.Internal
         {
             client = _clients.Where(client => client is not null)
                              .Where(client => client.Settings.ToString() == clientSettings.ToString())
-                             .SingleOrDefault();
+                             .FirstOrDefault();
 
             return client is not null;
         }

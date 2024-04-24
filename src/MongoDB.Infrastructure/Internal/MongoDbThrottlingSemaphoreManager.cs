@@ -49,7 +49,7 @@ namespace MongoDB.Infrastructure.Internal
                                    .Where(semaphore => semaphore.Key is not null && semaphore.Value is not null)
                                    .Where(semaphore => semaphore.Key == new MongoDbCluster(client.Settings.Servers))
                                    .Select(semaphore => semaphore.Value)
-                                   .SingleOrDefault();
+                                   .FirstOrDefault();
 
             return semaphore is not null;
         }
